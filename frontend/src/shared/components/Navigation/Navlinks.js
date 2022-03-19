@@ -4,12 +4,12 @@ import classes from './Navlinks.module.css'
 
 function Navlinks(props) {
     return (
-        <ul className={classes.navlinks}>
+        <ul className={classes['nav-links']}>
             <li>
                 <NavLink
                     to="/"
                     className={({ isActive }) =>
-                        isActive ? `${classes.active}` : undefined
+                        isActive ? `${classes['active']}` : undefined
                     }>
                     ALL USERS
                 </NavLink>
@@ -18,7 +18,7 @@ function Navlinks(props) {
                 <NavLink
                     to="/u1/places" 
                     className={({ isActive }) =>
-                        isActive ? `${classes.active}` : undefined
+                        isActive ? `${classes['active']}` : undefined
                     }>
                     MY PLACES
                 </NavLink>
@@ -27,7 +27,7 @@ function Navlinks(props) {
                 <NavLink
                     to="/places/new" 
                     className={({ isActive }) =>
-                        isActive ? `${classes.active}` : undefined
+                        isActive ? `${classes['active']}` : undefined
                     }>
                     ADD PLACE
                 </NavLink>
@@ -36,7 +36,7 @@ function Navlinks(props) {
                 <NavLink
                     to="/auth" 
                     className={({ isActive }) =>
-                        isActive ? `${classes.active}` : undefined
+                        isActive ? `${classes['active']}` : undefined
                     }>
                     AUTHENTICATE
                 </NavLink>

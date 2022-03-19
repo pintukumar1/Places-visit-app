@@ -3,7 +3,7 @@ import classes from './MainHeader.module.css'
 
 function MainHeader(props) {
     return (
-        <header className={classes.mainHeader}>
+        <header className={classes['main-header']}>
             {props.children}
         </header>
     )

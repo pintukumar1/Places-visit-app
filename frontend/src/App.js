@@ -12,7 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Users />} />
           <Route path="/places/new" element={<NewPlace />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
       </main>
     </Router>
