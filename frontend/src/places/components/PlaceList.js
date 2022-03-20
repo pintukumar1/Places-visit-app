@@ -1,10 +1,10 @@
 import React from 'react'
 import Card from '../../shared/UIElements/Card'
+import PlaceItem from './PlaceItem'
 import classes from './PlaceList.module.css'
 
 function PlaceList(props) {
-
-    if (props.items === 0) {
+    if (props.items.length === 0) {
         return (
             <div className={classes["place-list center"]}>
                 <Card >
@@ -17,7 +17,7 @@ function PlaceList(props) {
     return <ul className={classes["place-list"]}>
         {props.items.map(place => (
             <PlaceItem
-                key={place.item}
+                key={place.id}
                 id={place.id}
                 image={place.imageUrl}
                 title={place.title}

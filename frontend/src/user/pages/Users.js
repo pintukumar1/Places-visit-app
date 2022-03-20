@@ -4,7 +4,7 @@ import UsersList from "../components/UsersList"
 const Users = () => {
     const USERS = [
         {
-            id: "u2",
+            id: "u1",
             name: "MS Dhoni", 
             image : "https://www.skymetweather.com/themes/skymet/images/gallery/toplists/Best-MS-Dhoni-Hairstyles-To-Flaunt-This-Summer/1.jpg", 
             places: 2

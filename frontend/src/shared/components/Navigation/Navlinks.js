@@ -16,7 +16,7 @@ function Navlinks(props) {
             </li>
             <li >
                 <NavLink
-                    to="/u1/places" 
+                    to="/u1/places"
                     className={({ isActive }) =>
                         isActive ? `${classes['active']}` : undefined
                     }>

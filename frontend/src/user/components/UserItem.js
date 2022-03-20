@@ -9,7 +9,7 @@ function UserItem(props) {
     return (
         <li className={classes['user-item']}>
             <Card className={classes['user-item__content']}>
-                <Link to={`/${props.id}/places `}>
+                <Link to={`/${props.id}/places`}>
                     <div className={classes['user-item__image']}>
                         <Avatar image={props.image} alt={props.name} />
                     </div>
