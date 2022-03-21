@@ -1,6 +1,6 @@
 import React from 'react'
 import UserItem from './UserItem'
-import Card from '../../shared/UIElements/Card'
+import Card from '../../shared/components/UIElements/Card'
 import classes from './UsersList.module.css'
 
 function UsersList(props) {
