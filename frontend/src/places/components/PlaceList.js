@@ -6,7 +6,7 @@ import classes from './PlaceList.module.css'
 function PlaceList(props) {
     if (props.items.length === 0) {
         return (
-            <div className={classes["place-list center"]}>
+            <div className="center">
                 <Card >
                     <h2>No Places found. Maybe create one?</h2>
                     <button>Share Place</button>
