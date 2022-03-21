@@ -4,13 +4,13 @@ import Card from '../../shared/components/UIElements/Card'
 import Modal from '../../shared/components/UIElements/Modal'
 import classes from './PlaceItem.module.css'
 
-function PlaceItem(props) {
+const PlaceItem = props => {
     const [showMap, setShowMap] = useState(false)
 
     const openMapHandler = () => setShowMap(true)
 
     const closeMapHandler = () => setShowMap(false)
-
+    
     return (
         <React.Fragment>
             <Modal
@@ -19,13 +19,14 @@ function PlaceItem(props) {
                 header={props.address}
                 contentClass={classes["place-item__modal-content"]}
                 footerClass={classes["place-item__modal-actions"]}
-                footer={<Button onClick={closeMapHandler}>
-                    CLOSE
-                </Button>} >
-                    <div className={classes["map-container"]}>
-                        <h2>THE MAP!</h2>
-                    </div>
-                </Modal>
+                footer = {
+                    <Button onClick={closeMapHandler}>
+                        CLOSE
+                    </Button>} >
+                <div className={classes["map-container"]}>
+                    <h2>THE MAP!</h2>
+                </div>
+            </Modal>
             <li className={classes['place-item']}>
                 <Card className={classes['place-item__content']}>
                     <div className={classes['place-item__image']}>
@@ -44,9 +45,7 @@ function PlaceItem(props) {
                 </Card>
             </li>
         </React.Fragment>
-
     )
 }
 
 export default PlaceItem
- 
