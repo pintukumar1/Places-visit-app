@@ -1,10 +1,12 @@
 import React from 'react'
+import Input from '../../shared/components/FormElements/Input'
+import classes from './NewPlace.module.css'
 
 function NewPlace() {
     return (
-        <h2>
-            New Place works!!
-        </h2>
+        <form className={classes["place-form"]}>
+            <Input element="input" type="text" label="Title" />
+        </form>
     )
 }
 
