@@ -38,7 +38,8 @@ function UpdatePlace() {
     const [isLoading,setIsLoading] = useState(true);
     const placeId = useParams().placeId;
 
-    const [formState, inputHandler, setFormData] = useForm({
+    const [formState, inputHandler, setFormData] = useForm(
+        {
         title: {
             value: '',
             isValid: false
@@ -63,12 +64,12 @@ function UpdatePlace() {
                  value: identifiedPlace.description,
                  isValid: true
              }  
-            }, true 
-            );
+            }, true )
         }
         setIsLoading(false);
     }, [setFormData, identifiedPlace])
 
+    
     const updatePlaceSubmitHandler = (event) => {
         event.preventDefault();
         console.log(formState.inputs)
@@ -87,7 +88,9 @@ function UpdatePlace() {
     if(isLoading) {
         return (
             <div className="center">
-                <h2>Loading.....</h2> 
+                <Card>
+                    <h2>Loading.....</h2> 
+                </Card>
             </div>
         )
     }
