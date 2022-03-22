@@ -102,7 +102,7 @@ function UpdatePlace() {
                 element="input"
                 type="text"
                 label="Title"
-                validators={[VALIDATOR_REQUIRE]}
+                validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter a valid title."
                 onInput={inputHandler}
                 initialValue={formState.inputs.title.value}
