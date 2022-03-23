@@ -3,6 +3,8 @@ const express = require('express')
 const placesRoutes = require("./routes/places-routes")
 const usersRoutes = require("./routes/users-routes")
 const HttpError = require('./models/http-error')
+const { default: mongoose } = require('mongoose')
+require('dotenv').config()
 
 const app = express()
 
@@ -24,6 +26,15 @@ app.use((err, req, res, next) => {
     res.status(err.code || 500)
     res.json({ message: err.message || "An unknown error occured." })
 })
+
+mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log("DB Connected!")
+    })
+    .catch(err => {
+        console.log(err)
+    })
 
 app.listen(5000, () => {
     console.log("app is listening on port 5000")
