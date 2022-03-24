@@ -1,14 +1,15 @@
 const getCoordsForAddress = require("../util/location")
 const Place = require('../models/place')
 const validatePlaceInput = require('../validation/place')
+const ValidateUpdatePlaceInput = require('../validation/updatePlace')
 
 const getPlaceById = (req, res, next) => {
     const errors = {}
-    Place.findOne({ _id: req.params.pid })
+    Place.findById({ _id: req.params.pid })
         .then(place => {
             if (!place) {
                 errors.place = "Place not found"
-                return res.json(errors)
+                return res.status(404).json(errors)
             }
             res.json(place);
         })
@@ -18,23 +19,27 @@ const getPlaceById = (req, res, next) => {
 }
 
 const getPlacesByUserId = (req, res, next) => {
-    Place.find({ creator: req.params.uid })
+    const errors = {}
+    const userId = req.params.uid
+    Place.find({ creator: userId })
         .then(places => {
             if (!places || places.length === 0) {
                 errors.places = "No Place found with this user id"
+                return res.status(404).json(errors)
             }
-            res.json(places);
+            res.status(200).json(places);
         })
         .catch(err => {
-            res.status(404).json({ places: "No Places found." })
+            res.status(404).json(err)
         })
 }
+
 
 const createPlace = async (req, res, next) => {
     const { errors, isValid } = validatePlaceInput(req.body)
 
     if (!isValid) {
-        return res.status(400).json(errors)
+        return res.status(404).json(errors)
     }
 
     const title = req.body.title
@@ -58,58 +63,67 @@ const createPlace = async (req, res, next) => {
         creator: creator
     })
     place.save()
-    .then(result => {
-        console.log(result)
-        res.status(201).json({
-            message: "Place created successfully",
-            place: result
+        .then(result => {
+            res.status(201).json({
+                message: "Place created successfully",
+                place: result
+            })
         })
-    })
-    .catch(err => {
-        res.status(400).json({place: "failed to create"})
-    })
+        .catch(err => {
+            res.status(404).json({ place: "failed to create" })
+        })
 }
-    // let coordinates;
-    // try {
-    //     coordinates = await getCoordsForAddress(address)
-    // } catch (error) {
-    //     return next(error)
-    // }
 
-    // const createdPlace = new Place({
-    //     title: title,
-    //     description: description,
-    //     address: address,
-    //     location: coordinates,
-    //     image: "https://image.shutterstock.com/image-photo/modern-tower-buildings-skyscrapers-business-260nw-1369677335.jpg",
-    //     creator: creator
-    // })
-    // try {
-    //     await createdPlace.save()
-    // } catch (err) {
-    //     const error = new HttpError(
-    //         "Creating place failed, please try again.",
-    //         500
-    //     )
-    //     return next(error)
-    // }
-    // res.status(201).json({ place: createdPlace })
+const updatePlace = (req, res) => {
+    const placeId = req.params.pid;
 
+    const { errors, isValid } = ValidateUpdatePlaceInput(req.body)
 
-const updatePlace = async (req, res, next) => {
+    if (!isValid) {
+        return res.status(404).json(errors)
+    }
 
+    const title = req.body.title
+    const description = req.body.description
 
+    Place.findById(placeId)
+        .then(place => {
+            if (!place) {
+                errors.place = "Place not found in the database,please check once !"
+                return res.status(404).json(errors)
+            }
+            place.title = title;
+            place.description = description;
+            place.save()
+                .then(result => {
+                    res.status(200).json({ message: "Place updated", place: result })
+                })
+        })
+        .catch(err => {
+            res.status(404).json(err)
+        })
 };
 
 
-const deletePlace = (req, res, next) => {
-    // const placeId = req.params.pid;
-    // if (!DUMMY_PLACES.find(p => p.id === placeId)) {
-    //     throw new HttpError('Could not find a place for that id', 404)
-    // }
-    // DUMMY_PLACES = DUMMY_PLACES.filter(p => p.id !== placeId)
+const deletePlace = (req, res) => {
+    const errors = {}
 
-    // res.status(200).json({ message: "place deleted" })
+    const placeId = req.params.pid;
+
+    Place.findById(placeId)
+        .then(place => {
+            if (!place) {
+                errors.place = "Place not found with this id.Please check once."
+                return res.status(404).json(errors)
+            }
+            place.remove()
+            .then(() => {
+                res.status(200).json({ message: "Place deleted successfully. " })
+            })
+        })
+        .catch(err => {
+            res.status(404).json(err)
+        })
 }
 
 exports.getPlaceById = getPlaceById

@@ -14,8 +14,8 @@ module.exports = function validatePlaceInput(data) {
         errors.title = "title field is required."
     }
 
-    if (!Validator.isLength(data.description, { min: 5, max:500 })) {
-        errors.description = "description must be greater than 5 and less than 500 characters."
+    if (!Validator.isLength(data.description, { min: 5, max:300 })) {
+        errors.description = "description must be of length 5 and less than 300 characters."
     }
 
     if (Validator.isEmpty(data.description)) {
