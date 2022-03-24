@@ -3,7 +3,7 @@ const Place = require('../models/place')
 const validatePlaceInput = require('../validation/place')
 const ValidateUpdatePlaceInput = require('../validation/updatePlace')
 
-const getPlaceById = (req, res, next) => {
+const getPlaceById = (req, res) => {
     const errors = {}
     Place.findById({ _id: req.params.pid })
         .then(place => {
@@ -18,7 +18,8 @@ const getPlaceById = (req, res, next) => {
         })
 }
 
-const getPlacesByUserId = (req, res, next) => {
+
+const getPlacesByUserId = (req, res) => {
     const errors = {}
     const userId = req.params.uid
     Place.find({ creator: userId })
@@ -30,7 +31,7 @@ const getPlacesByUserId = (req, res, next) => {
             res.status(200).json(places);
         })
         .catch(err => {
-            res.status(404).json(err)
+            res.status(404).json({ places: "failed to fetch places by user id" })
         })
 }
 
@@ -100,7 +101,7 @@ const updatePlace = (req, res) => {
                 })
         })
         .catch(err => {
-            res.status(404).json(err)
+            res.status(404).json({ placenotfound: "Place not found!" })
         })
 };
 
@@ -117,12 +118,12 @@ const deletePlace = (req, res) => {
                 return res.status(404).json(errors)
             }
             place.remove()
-            .then(() => {
-                res.status(200).json({ message: "Place deleted successfully. " })
-            })
+                .then(() => {
+                    res.status(200).json({ message: "Place deleted successfully. " })
+                })
         })
         .catch(err => {
-            res.status(404).json(err)
+            res.status(404).json({ placenotfound: "Place not found. " })
         })
 }
 
