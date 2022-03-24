@@ -15,7 +15,7 @@ async function getCoordsForAddress(address) {
         throw error;
       }
     
-    const coordinates = {}
+    let coordinates = {}
     coordinates.lat = data.features[0].center[1]
     coordinates.long = data.features[0].center[0]
 
