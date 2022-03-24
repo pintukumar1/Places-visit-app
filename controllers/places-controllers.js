@@ -9,7 +9,7 @@ const getPlaceById = (req, res) => {
         .then(place => {
             if (!place) {
                 errors.place = "Place not found"
-                return res.status(404).json(errors)
+                return res.status(400).json(errors)
             }
             res.json(place);
         })
@@ -26,9 +26,9 @@ const getPlacesByUserId = (req, res) => {
         .then(places => {
             if (!places || places.length === 0) {
                 errors.places = "No Place found with this user id"
-                return res.status(404).json(errors)
+                return res.status(400).json(errors)
             }
-            res.status(200).json(places);
+            res.json(places);
         })
         .catch(err => {
             res.status(404).json({ places: "failed to fetch places by user id" })
@@ -40,7 +40,7 @@ const createPlace = async (req, res, next) => {
     const { errors, isValid } = validatePlaceInput(req.body)
 
     if (!isValid) {
-        return res.status(404).json(errors)
+        return res.status(400).json(errors)
     }
 
     const title = req.body.title
@@ -65,7 +65,7 @@ const createPlace = async (req, res, next) => {
     })
     place.save()
         .then(result => {
-            res.status(201).json({
+            res.json({
                 message: "Place created successfully",
                 place: result
             })
@@ -81,7 +81,7 @@ const updatePlace = (req, res) => {
     const { errors, isValid } = ValidateUpdatePlaceInput(req.body)
 
     if (!isValid) {
-        return res.status(404).json(errors)
+        return res.status(400).json(errors)
     }
 
     const title = req.body.title
@@ -91,13 +91,13 @@ const updatePlace = (req, res) => {
         .then(place => {
             if (!place) {
                 errors.place = "Place not found in the database,please check once !"
-                return res.status(404).json(errors)
+                return res.status(400).json(errors)
             }
             place.title = title;
             place.description = description;
             place.save()
                 .then(result => {
-                    res.status(200).json({ message: "Place updated", place: result })
+                    res.json({ message: "Place updated", place: result })
                 })
         })
         .catch(err => {
@@ -115,11 +115,11 @@ const deletePlace = (req, res) => {
         .then(place => {
             if (!place) {
                 errors.place = "Place not found with this id.Please check once."
-                return res.status(404).json(errors)
+                return res.status(400).json(errors)
             }
             place.remove()
                 .then(() => {
-                    res.status(200).json({ message: "Place deleted successfully. " })
+                    res.json({ message: "Place deleted successfully. " })
                 })
         })
         .catch(err => {
