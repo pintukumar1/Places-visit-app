@@ -20,7 +20,7 @@ function Navlinks(props) {
             </li>
             {auth.isLoggedIn && <li >
                 <NavLink
-                    to="/u1/places"
+                    to={`/${auth.userId}/places`}
                     className={({ isActive }) =>
                         isActive ? `${classes['active']}` : undefined
                     }>

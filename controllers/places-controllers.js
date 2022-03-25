@@ -108,13 +108,13 @@ const createPlace = async (req, res, next) => {
     await user.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
+    console.log(err)
     const error = new HttpError(
-      'Creating place failed, please try again.',
+      'Creating place failed, please try again................',
       500
     );
     return next(error);
   }
-
   res.status(201).json({ place: createdPlace });
 };
 

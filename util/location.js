@@ -7,7 +7,7 @@ async function getCoordsForAddress(address) {
     const response = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${ACCESS_TOKEN}`)
     const data = response.data;
 
-    if (!data || data.status === 'ZERO_RESULTS') {
+    if (!data) {
         const error = new HttpError(
           'Could not find location for the specified address.',
           422
@@ -15,7 +15,7 @@ async function getCoordsForAddress(address) {
         throw error;
       }
     
-    let coordinates = {}
+    const coordinates = {}
     coordinates.lat = data.features[0].center[1]
     coordinates.long = data.features[0].center[0]
 
