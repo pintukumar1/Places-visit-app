@@ -1,6 +1,4 @@
 import { useState, useCallback, useRef, useEffect } from "react"
-import LoadingSpinner from "../components/UIElements/LoadingSpinner"
-import ErrorModal from "../components/UIElements/ErrorModal"
 
 export const useHttpClient = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -12,8 +10,7 @@ export const useHttpClient = () => {
         url,
         method = "GET",
         body = null,
-        headers = {},
-        signal = httpAbortCtrl.signal
+        headers
     ) => {
         setIsLoading(true)
         const httpAbortCtrl = new AbortController()
@@ -22,26 +19,37 @@ export const useHttpClient = () => {
             const response = await fetch(url, {
                 method: method,
                 body: body,
-                headers: headers
+                headers: headers,
+                signal: httpAbortCtrl.signal
             })
             const responseData = await response.json()
+
+            activeHttpRequests.current = activeHttpRequests.current.filter(
+                reqCtrl => reqCtrl !== httpAbortCtrl
+            )
 
             if (!response.ok) {
                 throw new Error(responseData.message)
             }
+            setIsLoading(false)
             return responseData
         } catch (err) {
             setError(err.message)
+            setIsLoading(false)
+            throw err
         }
-        setIsLoading(false)
-    }, [])
+    },
+        []
+    )
+
     const clearError = () => {
         setError(null)
     }
+
     useEffect(() => {
         return () => {
-            activeHttpRequests.current.forEach(abortCtrl => abortCtrl.abortCtrl().abort())
-        } ;
+            activeHttpRequests.current.forEach(abortCtrl => abortCtrl.abort())
+        };
     }, [])
 
     return {
