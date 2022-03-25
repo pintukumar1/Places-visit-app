@@ -59,10 +59,8 @@ function Auth() {
 
     const authSubmitHandler = async (event) => {
         event.preventDefault()
-        console.log(formState.inputs)
         // auth.login()
         // setIsLoading(true)
-
         if (isLoginMode) {
             try {
                 const responseData = await sendRequest('http://localhost:5000/api/users/login',
@@ -111,7 +109,11 @@ function Auth() {
                             errorText="Please enter a name."
                             onInput={inputHandler}
                         />)}
-                    {!isLoginMode && <ImageUpload center id="image" onInput={inputHandler} />}
+                    {!isLoginMode && <ImageUpload 
+                    center 
+                    id="image" 
+                    onInput={inputHandler} 
+                    errorText="Please provide an image for the user"/>}
                     <Input
                         id="email"
                         element="input"
