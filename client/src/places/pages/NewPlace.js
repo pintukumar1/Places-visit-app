@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Input from '../../shared/components/FormElements/Input'
 import Button from '../../shared/components/FormElements/Button'
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/Util/validators'
@@ -11,6 +12,7 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 
 function NewPlace() {
     const auth = useContext(AuthContext)
+    const navigate = useNavigate();
     const { isLoading, error, sendRequest, clearError } = useHttpClient()
     const [formState, inputHandler] = useForm(
         {
@@ -45,6 +47,7 @@ function NewPlace() {
                     "Content-Type" : "application/json"
                 }
             );
+            navigate("/");
             //Redirect the user to a different page
         } catch (err) {}
     }
