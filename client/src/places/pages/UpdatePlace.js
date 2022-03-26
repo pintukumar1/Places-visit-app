@@ -34,7 +34,7 @@ function UpdatePlace() {
     useEffect(() => {
         const fetchPlace = async () => {
             try {
-                const responseData = await sendRequest(` http://localhost:5000/api/places/${placeId}`)
+                const responseData = await sendRequest(`/api/places/${placeId}`)
                 setLoadedPlace(responseData.place);
                 setFormData(
                     {
@@ -57,7 +57,7 @@ function UpdatePlace() {
     const updatePlaceSubmitHandler = async (event) => {
         event.preventDefault();
         try {
-            await sendRequest(`http://localhost:5000/api/places/${placeId}`, "PATCH",
+            await sendRequest(`/api/places/${placeId}`, "PATCH",
                 JSON.stringify({
                     title: formState.inputs.title.value,
                     description: formState.inputs.description.value
