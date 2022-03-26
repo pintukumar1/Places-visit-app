@@ -90,7 +90,7 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(201).json({ user: createdUser.id, email: createdUser.email, token: token });
+  res.status(201).json({ userId: createdUser.id, email: createdUser.email, token: token });
 };
 
 
@@ -113,7 +113,7 @@ const login = async (req, res, next) => {
   if (!existingUser) {
     const error = new HttpError(
       'Invalid credentials, could not log you in.',
-      401
+      403
     );
     return next(error);
   }
@@ -129,7 +129,7 @@ const login = async (req, res, next) => {
   }
 
   if (!isValidPassword) {
-    const error = new HttpError("Invalid credentials, could not log you in.", 401)
+    const error = new HttpError("Invalid credentials, could not log you in.", 403)
     return next(error);
   }
 
@@ -149,8 +149,8 @@ const login = async (req, res, next) => {
   }
 
   res.json({
-    userId: existingUser.id,
-    email: existingUser.email,
+    userId: existingUser.id ,
+    email: existingUser.email ,
     token: token
   });
 };
