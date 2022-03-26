@@ -17,7 +17,6 @@ const UserPlaces = () => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(`http://localhost:5000/api/places/user/${userId}`)
-        console.log(responseData)
         setLoadedPlaces(responseData.places)
       } catch (err) { }
     };

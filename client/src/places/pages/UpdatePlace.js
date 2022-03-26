@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams,useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import Input from '../../shared/components/FormElements/Input';
 import Card from '../../shared/components/UIElements/Card';
 import Button from '../../shared/components/FormElements/Button';
@@ -9,7 +9,7 @@ import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/Util/valida
 import classes from './PlaceForm.module.css'
 import { useForm } from '../../shared/hooks/form-hook';
 import { useHttpClient } from '../../shared/hooks/http-hook'
-import {AuthContext} from "../../shared/context/auth-context"
+import { AuthContext } from "../../shared/context/auth-context"
 
 function UpdatePlace() {
     const auth = useContext(AuthContext)
@@ -63,7 +63,8 @@ function UpdatePlace() {
                     description: formState.inputs.description.value
                 }),
                 {
-                    "Content-Type": "Application/json"
+                    "Content-Type": "Application/json",
+                    Authorization: "Bearer " + auth.token
                 }
             )
             navigate("/" + auth.userId + "/places")
