@@ -1,6 +1,5 @@
 const axios = require('axios')
 const HttpError = require('../models/http-error');
-require("dotenv").config()
 
 const ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN
 
